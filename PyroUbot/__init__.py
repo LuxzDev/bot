@@ -1,5 +1,4 @@
 import uvloop
-
 uvloop.install()
 
 import logging
@@ -7,11 +6,13 @@ import os
 import re
 
 from pyrogram import Client, filters
-from pyrogram.enums import ParseMode 
+from pyrogram.enums import ParseMode
 from pyrogram.handlers import CallbackQueryHandler, MessageHandler
 from pyrogram.types import Message
-from pytgcalls import PyTgCalls
+
+from pytgcalls import GroupCallFactory
 from pytgcalls import filters as fl
+
 from pyromod import listen
 from PyroUbot.config import *
 from aiohttp import ClientSession
@@ -40,19 +41,17 @@ aiosession = ClientSession()
 class Bot(Client):
     def __init__(self, **kwargs):
         super().__init__(**kwargs, device_model="ᴋɪɴɢᴢɴᴏᴇᴢᴜʙᴏᴛ")
-        
+    
     def on_message(self, filters=None, group=-1):
         def decorator(func):
             self.add_handler(MessageHandler(func, filters), group)
             return func
-
         return decorator
 
     def on_callback_query(self, filters=None, group=-1):
         def decorator(func):
             self.add_handler(CallbackQueryHandler(func, filters), group)
             return func
-
         return decorator
 
     async def start(self):
@@ -68,21 +67,20 @@ class Ubot(Client):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs, device_model="ᴋɪɴɢᴢɴᴏᴇᴢᴜʙᴏᴛ")
-        self.call_py = PyTgCalls(self)
+        self.call_py = GroupCallFactory(self).get_group_call()
 
     def on_message(self, filters=None, group=-1):
         def decorator(func):
             for ub in self._ubot:
                 ub.add_handler(MessageHandler(func, filters), group)
             return func
-
         return decorator
 
     def set_prefix(self, user_id, prefix):
         self._prefix[user_id] = prefix
     
     async def get_prefix(self, user_id):
-        return self._prefix.get(user_id, ["."])
+        return self._prefix.get(user_id, ["." ])
 
     def cmd_prefix(self, cmd):
         command_re = re.compile(r"([\"'])(.*?)(?<!\\)\1|(\S+)")
@@ -140,7 +138,6 @@ class Ubot(Client):
         self._get_my_id.append(self.me.id)
         self._translate[self.me.id] = "id"
         print(f"[INFO] - ({self.me.id}) - STARTED")
-
 
 bot = Bot(
     name="bot",
