@@ -23,7 +23,7 @@ async def _(client, callback_query):
             f"""
 <blockquote><b>SILAHKAN MELAKUKAN PEMBAYARAN KE NOMOR DANA OWNER</b>           
 
-DANA : ||https://files.catbox.moe/bj5sex.jpg||
+QRIS : ||https://files.catbox.moe/6sqyst.jpeg||
 
 <b>💬 sɪʟᴀʜᴋᴀɴ ᴋɪʀɪᴍᴋᴀɴ ʙᴜᴋᴛɪ sᴄʀᴇᴇɴsʜᴏᴛ ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴀɴᴅᴀ: {full_name}</b></blockquote>
 """,
